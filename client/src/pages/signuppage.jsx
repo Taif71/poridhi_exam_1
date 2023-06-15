@@ -16,7 +16,7 @@ const SignUpPage = () => {
             age: Number(inputs.age),
             profession: inputs.profession,
         });
-        await fetch(`${process.env.BACKEND_URI}/save-user-data`, {
+        await fetch(`${process.env.REACT_APP_BACKEND_URI}/save-user-data`, {
             method: "POST",
             body: requestBody,
             headers: {

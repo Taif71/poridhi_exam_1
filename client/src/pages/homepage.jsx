@@ -1,11 +1,11 @@
-import React, { useEffect, useState }  from 'react';
+import React, { useEffect, useState } from 'react';
 
 const HomePage = () => {
     const [usersData, setUsersData] = useState([])
     const [loading, setLoading] = useState(false)
     useEffect(() => {
         setLoading(true)
-        fetch(`${process.env.BACKEND_URI}/get-all-users`)
+        fetch(`${process.env.REACT_APP_BACKEND_URI}/get-all-users`)
             .then(response => response.json())
             .then(json => setUsersData(json))
             .finally(() => {
@@ -35,7 +35,6 @@ const HomePage = () => {
                                 <td>{user.profession}</td>
                             </tr>
                         ))}
-
                     </table>
                 </>
             )}

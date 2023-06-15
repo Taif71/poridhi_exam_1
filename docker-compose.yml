@@ -31,6 +31,7 @@ services:
         environment:
             - MONGO_URI=mongodb://mongodb:27017/devops
             - REDIS_URI=redis://redis2:6379
+            - PORT=3002
         depends_on:
             - mongodb
             - redis2
@@ -46,6 +47,7 @@ services:
         environment:
             - MONGO_URI=mongodb://mongodb:27017/devops
             - REDIS_URI=redis://redis2:6379
+            - PORT=3001
         depends_on:
             - mongodb
             - redis2
@@ -60,9 +62,9 @@ services:
         ports:
             - 3000:3000
         environment:
-            - BACKEND_URI=http://localhost:8000/api
+            - REACT_APP_BACKEND_URI=http://localhost:3001/api
         depends_on:
-            - worker-server
+            - backend-server
         networks:
             - mynetwork
 networks:
