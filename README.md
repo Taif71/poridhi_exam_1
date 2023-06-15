@@ -42,7 +42,7 @@ REDIS_URI=redis://localhost:6379
 Client:
 BACKEND_URI=http://localhost:8001/api
 
-#### Step 4 Docker Command
+#### Step: For running on Docker:
 Now go to the root directory of this project and run the following command.
 It should build all your images and run the containers perfectly
 
