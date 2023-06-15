@@ -1,14 +1,13 @@
 const { createClient } = require("redis");
 const redisUrl = process.env.REDIS_URI;
-const redisChannel = "REDIS_TEST_CHANNEL";
+const redisChannel = "REDIS_CHANNEL";
 
 let redisClient;
-const initRedis = async () => {
+const initializeRedis = async () => {
 	redisClient = createClient({ url: redisUrl });
-	redisClient.on("error", (error) => console.error(`Error : ${error}`));
 	await redisClient.connect();
-	// redis status logger
-	redisClient.on("error", (err) => console.log("Redis error", err));
+
+	redisClient.on("error", (err) => console.log("Redis error: ", err));
 	redisClient.on("connect", () => console.log("Connected to Redis"));
 	redisClient.on("reconnecting", () => {
 		console.log("Reconnecting to Redis.");
@@ -16,11 +15,11 @@ const initRedis = async () => {
 };
 
 (async () => {
-	await initRedis();
+	await initializeRedis();
 })();
 
 module.exports = {
 	redisClient,
-	initRedis,
+	initializeRedis,
 	redisChannel,
 };

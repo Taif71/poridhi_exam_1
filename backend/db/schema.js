@@ -1,14 +1,16 @@
 const mongoose = require("mongoose");
 
 const dataSchema = new mongoose.Schema({
-	key: {
+	username: {
 		type: String,
 		trim: true,
-		unique: true,
 	},
-	value: {
+	age: {
+		type: Number,
+	},
+	profession: {
 		type: String,
 	},
 });
-const DataModel = mongoose.model("user-infos", dataSchema);
+const DataModel = mongoose.model("user-info", dataSchema);
 module.exports = DataModel;

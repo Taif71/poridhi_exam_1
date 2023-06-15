@@ -1,9 +1,7 @@
 const { default: mongoose } = require("mongoose");
 
-const connectToDb = async () => {
+const connectToDatabase = async () => {
 	try {
-		// "mongodb://mongodb:27017/devops"
-		//------connect to mongodb
 		await mongoose.connect(process.env.MONGO_URI, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
@@ -22,9 +20,9 @@ const connectToDb = async () => {
 };
 
 (async () => {
-	await connectToDb();
+	await connectToDatabase();
 })();
 
 module.exports = {
-	connectToDb,
+	connectToDatabase
 };

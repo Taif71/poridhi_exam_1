@@ -1,17 +1,16 @@
 const { createClient } = require("redis");
-const { saveDatabyRedis } = require("../pub-sub");
+const { saveDataToDatabase } = require("../pub-sub");
 const redisUrl = process.env.REDIS_URI;
-const redisChannel = "REDIS_TEST_CHANNEL";
+const redisChannel = "REDIS_CHANNEL";
 
 let redisClient;
 let subscriber;
-const initRedis = async () => {
+const initializeRedis = async () => {
 	redisClient = createClient({ url: redisUrl });
 	redisClient.on("error", (error) => console.error(`Error : ${error}`));
 	await redisClient.connect();
+	
 	subscriber = redisClient;
-
-	// redis status logger
 	subscriber.on("error", (err) => console.log("Redis error", err));
 	subscriber.on("connect", () => console.log("Connected to Redis"));
 	subscriber.on("reconnecting", () => {
@@ -19,10 +18,10 @@ const initRedis = async () => {
 	});
 	subscriber.on("ready", () => {
 		console.log("subscriber is ready for action!");
-		subscriber.subscribe(redisChannel, async (message) => {
-			console.log("subscriber service:- ", message);
+		subscriber.subscribe(redisChannel, async (data) => {
+			console.log("subscriber service:- ", data);
 			try {
-				return await saveDatabyRedis(JSON.parse(message));
+				return await saveDataToDatabase(JSON.parse(data));
 			} catch (error) {
 				console.log({ error });
 			}
@@ -31,12 +30,12 @@ const initRedis = async () => {
 };
 
 (async () => {
-	await initRedis();
+	await initializeRedis();
 })();
 
 module.exports = {
 	redisClient,
 	subscriber,
-	initRedis,
+	initializeRedis,
 	redisChannel,
 };

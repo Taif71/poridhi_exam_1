@@ -1,13 +1,16 @@
-const DataModel = require("./db/schema");
+const MongodbModel = require("./db/schema");
 
-const saveDatabyRedis = async (data) => {
+const saveDataToDatabase = async (data) => {
 	try {
 		const { username, age, profession } = data;
 		const dbPayload = {
 			username, age, profession
 		}
-		const result = (await DataModel.create(dbPayload)).toObject();
-		return result;
+		const isUserExist = await MongodbModel.findOne({ username: username }).lean();
+		if (!isUserExist) {
+			const result = (await MongodbModel.create(dbPayload)).toObject();
+			return result;
+		}
 	} catch (error) {
 		console.log(error.message);
 		return error.message;
@@ -15,5 +18,5 @@ const saveDatabyRedis = async (data) => {
 };
 
 module.exports = {
-	saveDatabyRedis,
+	saveDataToDatabase,
 };

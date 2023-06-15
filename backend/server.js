@@ -1,30 +1,27 @@
 const express = require("express");
-const app = express();
-const port = 9001;
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
-const { connectToDb } = require("./db/conn");
+const { connectToDatabase } = require("./db/mongodb");
+const { initializeRedis } = require("./db/redis");
 const router = require("./api/routes");
-const { initRedis } = require("./db/redis");
 
-// --------- app use -------------
+// express app configurations setup 
+const app = express();
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-//------connect to mongodb
-connectToDb()
-initRedis()
+connectToDatabase()
+initializeRedis()
 
-// ---------- connect to route ---------------
+// routes
 app.use("/api", router);
-
-//-------------- run server ------------
-app.get("/", (req, res) => {
-	res.send("Backend Server!");
+app.get("/", () => {
+	res.send("Backend Server working properyl!");
 });
 
-app.listen(process.env.PORT || port, () => {
-	console.log(`Listening at http://localhost:${process.env.PORT || port}`);
+// server port listening to
+app.listen(process.env.PORT, () => {
+	console.log(`Listening at http://localhost:${process.env.PORT}`);
 });

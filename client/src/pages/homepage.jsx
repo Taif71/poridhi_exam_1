@@ -5,7 +5,7 @@ const HomePage = () => {
     const [loading, setLoading] = useState(false)
     useEffect(() => {
         setLoading(true)
-        fetch(`${process.env.BACKEND_URI}/get-all-data`)
+        fetch(`${process.env.BACKEND_URI}/get-all-users`)
             .then(response => response.json())
             .then(json => setUsersData(json))
             .finally(() => {

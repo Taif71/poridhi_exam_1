@@ -55,5 +55,6 @@ docker-compose up -d
 You should be able to run the whole projects.
 There are 3 api end points for service:
   GET http://localhost:8001/api/get-user/:id
-  GET http://localhost:8000/api/get-all-data
-  POST http://localhost:8000/api/save-data  Body example: { username: "john", age: 10, profession: "student"}
+  GET http://localhost:8000/api/get-all-users
+  POST http://localhost:8000/api/save-user-data  
+      Body example: { username: "john", age: 10, profession: "student"}
